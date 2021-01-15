@@ -24,8 +24,7 @@ int main(int argc, char **argv)
         else if (strcmp(argv[i], "E") == 0) 
         {
             explore("qwerty_35");
-            fgets(line, 2054, buffer);
-            
+            fgets(line, 2044, &buffer);
             printf("|%s|\n", line);
             //load_file("game.txt");
 	        load_explore(buffer, board);

@@ -24,6 +24,8 @@
 
 Map *load_explore(char * response, Map *board)
 {
+    //Map *board = (Map*) malloc (sizeof(Map));
+
     int i=0;
     const cJSON *status = NULL;
     const cJSON *payload = NULL;
@@ -57,25 +59,15 @@ Map *load_explore(char * response, Map *board)
 
 
 
-        board->current_x[i] = x->valueint;
-        board->current_y[i] = y->valueint;
+        board->x[i] = x->valueint;
+        board->y[i] = y->valueint;
         
-                if(!board->max_x) board->max_x = x->valueint+1;
-        else 
-        {
-            if (x->valueint+1 > board->max_x) board->max_x = x->valueint+1;
-        }
 
-        if(!board->max_y) board->max_y =  y->valueint+1;
-        else 
-        {
-            if (y->valueint+1 > board->max_y) board->max_y = y->valueint+1;
-        }
 
         board->types[x->valueint][y->valueint] = (char*) malloc(sizeof(char) * strlen((type->valuestring) + 1));
-        if (strcmp(type->valuestring, "grass") == 0) board->types[x->valueint][y->valueint] = "::";
-        else if (strcmp(type->valuestring, "wall")==0) board->types[x->valueint][y->valueint] = "##";
-        else if (strcmp(type->valuestring, "sand")==0) board->types[x->valueint][y->valueint] = "@@";
+        if (strcmp(type->valuestring, "grass") == 0) board->types[x->valueint][y->valueint] = '1';
+        else if (strcmp(type->valuestring, "wall")==0) board->types[x->valueint][y->valueint] = '2';
+        else if (strcmp(type->valuestring, "sand")==0) board->types[x->valueint][y->valueint] = '3';
     
         i++;
     }
@@ -95,9 +87,9 @@ void wypisz(Map m)
     int d = 0;
     int i,j;
     //printf("%d %d !!!\n",m.max_x, m.max_y);
-    for(i=0;i<m.max_x;i++)
+    for(i=0;i<20;i++)
     {
-        for(j=0;j<m.max_y;j++)
+        for(j=0;j<20;j++)
         {   
             if (m.types[j][i]) printf(" %s ", m.types[j][i]);
             else printf ("[  ]");

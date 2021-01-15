@@ -14,20 +14,16 @@ typedef struct _Memory
 } Memory;
 
 
-typedef struct _Fields3
-{
-    char *type[3];
-    int x[3];
-    int y[3];
-} Fields3;
-
 typedef struct _Map
 {
-    char *types[20][20];
-    int current_x[20];
-    int current_y[20];
-    int max_x;
-    int max_y;
+    char **types;
+    int *x;
+    int *y;
+    char *name;
+    char *current_session;
+    char *direction;
+    int step;
+    int bonus;
 } Map;
 
 

@@ -43,10 +43,7 @@ static size_t write_callback(void *data, size_t size, size_t nmemb, void *userp)
         curl_easy_setopt(curl, CURLOPT_URL, url);
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
 
-
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
-
-
 
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
 
@@ -66,6 +63,7 @@ static size_t write_callback(void *data, size_t size, size_t nmemb, void *userp)
         curl_easy_cleanup(curl);
     }
 }
+
 int info(char *token) 
 {
     char url[100] = "http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/info/";
@@ -78,9 +76,8 @@ int info(char *token)
  {
     char url[100] = "http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/move/";
     strcat(url, token);
-        make_request(url, "command.json");
+    make_request(url, "command.json");
     return 0;
-
  }
 
  int rotate_right(char *token) 
@@ -89,8 +86,8 @@ int info(char *token)
     strcat(url, token);
     char url2[100] ="/right";
     strcat(url, url2);
-        make_request(url, "command.json");
-        return 0;
+    make_request(url, "command.json");
+    return 0;
 }
  int rotate_left(char *token) 
  {
@@ -111,15 +108,3 @@ int info(char *token)
 
  }
 
-// int main(int argc, char **argv)
-// {
-//     for(int i=0; i<argc; i++)
-//     {
-//     if(strcmp(argv[i], "M") == 0) move("qwerty_35");
-//     else if (strcmp(argv[i], "RL") == 0) rotate_left("qwerty_35");
-//     else if (strcmp(argv[i], "E") == 0) explore("qwerty_35");
-//     else if (strcmp(argv[i], "RR") == 0) rotate_right("qwerty_35");
-//     else if (strcmp(argv[i], "I") == 0) info("qwerty_35");
-//     }
-//     return 0;
-// }
