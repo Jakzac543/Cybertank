@@ -1,0 +1,6 @@
+1. JSON.c (funkcje wczytywania komendy explore i pozostałych komend)
+2. File.c (funkcje wypisywania mapy do pliku i wczytywania jej z pliku do struktury)
+3. Offset.c (dynamiczny rozmiar mapy)
+4. Communication.c()
+5. Exploring.c (AI)
+6. Main.c (połączenie wszystkiego + ewentualny interfejs)
