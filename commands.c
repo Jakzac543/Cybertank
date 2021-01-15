@@ -65,7 +65,6 @@ static size_t write_callback(void *data, size_t size, size_t nmemb, void *userp)
         free(chunk.response);
         curl_easy_cleanup(curl);
     }
-     
 }
 int info(char *token) 
 {

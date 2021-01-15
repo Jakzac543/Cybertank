@@ -1,10 +1,29 @@
 #include "declarations.h"
 
+ Map *load_file(char *file)
+ {
+    Map *board = (Map*) malloc (sizeof(Map));
 
-Fields3 *load_explore(char * response, Map *board)
+    int i = 0;
+    char buffer[2048];
+    FILE *g = fopen(file, "r");
+
+    fread(buffer,sizeof(char),2047,g);
+    //printf("%s", buffer);
+    //printf("%ld",strlen(buffer));
+    for(i=0; i<strlen(buffer); i++)
+      {
+         printf("{%c}", buffer[i]);
+         //printf("%ld!\n", strlen(buffer));
+      }
+     fclose(g);
+  
+     return board;
+ }
+
+
+Map *load_explore(char * response, Map *board)
 {
-    Fields3 *a = NULL;
-    a = (Fields3*) malloc(sizeof(Fields3));
     int i=0;
     const cJSON *status = NULL;
     const cJSON *payload = NULL;
@@ -37,30 +56,57 @@ Fields3 *load_explore(char * response, Map *board)
         }
 
 
+
         board->current_x[i] = x->valueint;
         board->current_y[i] = y->valueint;
+        
+                if(!board->max_x) board->max_x = x->valueint+1;
+        else 
+        {
+            if (x->valueint+1 > board->max_x) board->max_x = x->valueint+1;
+        }
+
+        if(!board->max_y) board->max_y =  y->valueint+1;
+        else 
+        {
+            if (y->valueint+1 > board->max_y) board->max_y = y->valueint+1;
+        }
 
         board->types[x->valueint][y->valueint] = (char*) malloc(sizeof(char) * strlen((type->valuestring) + 1));
-        strcpy(board->types[x->valueint][y->valueint], type->valuestring);
+        if (strcmp(type->valuestring, "grass") == 0) board->types[x->valueint][y->valueint] = "::";
+        else if (strcmp(type->valuestring, "wall")==0) board->types[x->valueint][y->valueint] = "##";
+        else if (strcmp(type->valuestring, "sand")==0) board->types[x->valueint][y->valueint] = "@@";
+    
         i++;
     }
 
 end:
     cJSON_Delete(response_json);
-    return a;
+    return board;
 }
 
-void wypisz(Map *m)
+void wypisz(Map m)
 {
-    for(int i=0;i<20;i++)
+    FILE *fin = fopen("game.txt", "w+");
+    char g[6] = "grass";
+    char w[5] = "wall";
+    char s[5] = "sand";
+    char *a;
+    int d = 0;
+    int i,j;
+    //printf("%d %d !!!\n",m.max_x, m.max_y);
+    for(i=0;i<m.max_x;i++)
     {
-        for(int j=0;j<20;j++)
+        for(j=0;j<m.max_y;j++)
         {   
-            if (m->types[i][j] == "(null)") m->types[i][j] = " ";
-            else printf("[%6s ] ", m->types[i][j]);
+            if (m.types[j][i]) printf(" %s ", m.types[j][i]);
+            else printf ("[  ]");
             
+            if (m.types[j][i]) fprintf(fin," %s ", m.types[j][i]);
+            else fprintf (fin,"[  ]");
         }
         printf("\n");
+        fprintf(fin,"\n");
     }
 }
 

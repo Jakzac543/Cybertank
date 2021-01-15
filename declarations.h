@@ -26,6 +26,8 @@ typedef struct _Map
     char *types[20][20];
     int current_x[20];
     int current_y[20];
+    int max_x;
+    int max_y;
 } Map;
 
 
@@ -34,8 +36,9 @@ int move(char *token);
 int rotate_right(char *token); 
 int rotate_left(char *token);
 int explore(char *token);
-Fields3 *load_explore(char * response, Map *board);
-void wypisz(Map *m);
+Map *load_file(char *file);
+Map *load_explore(char * response, Map *board);
+void wypisz(Map m);
 
 
 

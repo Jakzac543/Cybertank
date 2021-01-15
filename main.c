@@ -5,6 +5,7 @@ int main(int argc, char **argv)
 
     Map *board = (Map*) malloc(sizeof(Map));
     char buffer[2048];
+    char line[2055];
 	FILE *f = fopen("ex_command.json", "r");
     fread(buffer,1,2048,f);
     fclose(f);
@@ -23,9 +24,12 @@ int main(int argc, char **argv)
         else if (strcmp(argv[i], "E") == 0) 
         {
             explore("qwerty_35");
-            printf("|%s|\n", buffer);
+            fgets(line, 2054, buffer);
+            
+            printf("|%s|\n", line);
+            //load_file("game.txt");
 	        load_explore(buffer, board);
-            wypisz(board);
+            wypisz(*board);
         }
         else if (strcmp(argv[i], "RR") == 0) 
         {
